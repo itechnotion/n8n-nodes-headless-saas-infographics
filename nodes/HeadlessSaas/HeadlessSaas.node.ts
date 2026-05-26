@@ -13,13 +13,13 @@ const BASE_URL = 'https://headless-sass-bzzrfsh6ra-el.a.run.app';
 
 export class HeadlessSaas implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Headless SaaS',
+		displayName: 'Infographic Image Generator',
 		name: 'headlessSaas',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"]}}',
 		description: 'Generate infographics, comics, cover images, social carousels and slide decks using PixlrAPI',
-		defaults: { name: 'Headless SaaS' },
+		defaults: { name: 'Infographic Image Generator' },
 		usableAsTool: true,
 
 		icon: {
