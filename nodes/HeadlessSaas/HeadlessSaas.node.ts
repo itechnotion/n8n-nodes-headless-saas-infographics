@@ -574,17 +574,27 @@ export class HeadlessSaas implements INodeType {
 					},
 				);
 
-				if (!resp?.success) {
+				const normalizedResp = Array.isArray(resp) ? resp[0] : resp;
+				if (!normalizedResp?.success) {
 					throw new NodeOperationError(
 						this.getNode(),
-						resp?.message ?? 'API call failed.',
+						normalizedResp?.message ?? 'API call failed.',
 						{ itemIndex: i },
 					);
 				}
 
-				// Normalise single / multi image responses
-				const data = resp.data ?? {};
-				const imageUrls: string[] = data.imageUrls ?? (data.imageUrl ? [data.imageUrl] : []);
+				// Normalise API variants (single image, multi-image, and deck metadata).
+				const data = (normalizedResp.data ?? {}) as IDataObject;
+				const imageUrl = typeof data.imageUrl === 'string' ? data.imageUrl : null;
+				const imageUrls = Array.isArray(data.imageUrls)
+					? data.imageUrls.filter((url): url is string => typeof url === 'string')
+					: imageUrl
+						? [imageUrl]
+						: [];
+				const pdfUrl = typeof data.pdfUrl === 'string' ? data.pdfUrl : null;
+				const usage = (typeof data.usage === 'object' && data.usage !== null)
+					? (data.usage as IDataObject)
+					: null;
 
 				returnData.push({
 					json: {
@@ -593,7 +603,9 @@ export class HeadlessSaas implements INodeType {
 						skill,
 						imageUrls,
 						firstImageUrl:    imageUrls[0] ?? null,
-						imageUrl:         data.imageUrl ?? imageUrls[0] ?? null,
+						imageUrl:         imageUrl ?? imageUrls[0] ?? null,
+						pdfUrl,
+						usage,
 						creditsRemaining: data.creditsRemaining ?? null,
 					},
 					pairedItem: { item: i },

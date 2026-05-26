@@ -30,10 +30,19 @@ export class HeadlessSaasApi implements ICredentialType {
 			method: 'POST',
 			baseURL: 'https://headless-sass-bzzrfsh6ra-el.a.run.app',
 			url: '/api/v1/generate-image',
-			// Send a minimal invalid body — we expect a 400 (bad request) not a 401 (unauthorized).
-			// A non-401 response means the key was accepted by the auth layer.
+			ignoreHttpStatusErrors: true,
+			// Expect 400 for test payload with valid key, 401 for invalid key.
 			body: { skill: '__test__', content: '__test__' },
 		},
+		rules: [
+			{
+				type: 'responseCode',
+				properties: {
+					value: 401,
+					message: 'Invalid API key',
+				},
+			},
+		],
 	};
 
 	properties: INodeProperties[] = [
