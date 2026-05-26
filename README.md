@@ -323,7 +323,7 @@ Enable **Continue On Fail** on the node to handle errors gracefully in your work
 
 ```bash
 # Build the node
-pnpm run build
+pnpm run build --
 
 # Link into your local n8n custom nodes directory
 mkdir -p ~/.n8n/custom
