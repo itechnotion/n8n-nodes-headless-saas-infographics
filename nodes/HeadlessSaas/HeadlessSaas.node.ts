@@ -583,11 +583,13 @@ export class HeadlessSaas implements INodeType {
 					);
 				}
 
-				// Normalise API variants (single image, multi-image, and deck metadata).
-				const data = (normalizedResp.data ?? {}) as IDataObject;
+				// Normalise API variants (single image, multi-image, deck metadata, and credits).
+				const data = (normalizedResp.data ?? normalizedResp) as IDataObject;
 				const imageUrl = typeof data.imageUrl === 'string' ? data.imageUrl : null;
 				const imageUrls = Array.isArray(data.imageUrls)
 					? data.imageUrls.filter((url): url is string => typeof url === 'string')
+					: typeof data.imageUrls === 'string'
+						? [data.imageUrls]
 					: imageUrl
 						? [imageUrl]
 						: [];
@@ -606,7 +608,8 @@ export class HeadlessSaas implements INodeType {
 						imageUrl:         imageUrl ?? imageUrls[0] ?? null,
 						pdfUrl,
 						usage,
-						creditsRemaining: data.creditsRemaining ?? null,
+						creditsRemaining: data.creditsRemaining ?? normalizedResp.creditsRemaining ?? null,
+						apiData: data,
 					},
 					pairedItem: { item: i },
 				});
