@@ -1,0 +1,70 @@
+{
+  "name": "@itechnotion/n8n-nodes-headless-saas-infographics",
+  "version": "1.0.0",
+  "description": "Headless SaaS integration for n8n — generate images using your API key",
+  "license": "MIT",
+  "homepage": "https://github.com/itechnotion/n8n-nodes-headless-saas-infographics#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itechnotion/n8n-nodes-headless-saas-infographics.git"
+  },
+  "bugs": {
+    "url": "https://github.com/itechnotion/n8n-nodes-headless-saas-infographics/issues"
+  },
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": {
+    "name": "Avkash Kakdia",
+    "email": "avkash@itechnotion.com"
+  },
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "headless-saas",
+    "image-generation",
+    "automation"
+  ],
+  "scripts": {
+    "build": "n8n-node build",
+    "build:watch": "tsc --watch",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "release": "n8n-node release",
+    "prepublishOnly": "n8n-node prerelease"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": false,
+    "credentials": [
+      "dist/credentials/HeadlessSaasApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/HeadlessSaas/HeadlessSaas.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "^0.32.0",
+    "@types/node": "^25.9.1",
+    "eslint": "^9.29.0",
+    "n8n-workflow": "^2.16.0",
+    "prettier": "3.6.2",
+    "typescript": "5.9.2"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "pnpm@10.22.0"
+}
