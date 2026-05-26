@@ -13,8 +13,6 @@
 #
 #   npm list @n8n/node-cli
 #
-# To upgrade, add @n8n/node-cli@latest as a dev dependency using your package manager.
-#
 # ─── ONE-TIME SETUP ────────────────────────────────────────────────────────────
 #
 # Option A — OIDC Trusted Publishing (recommended, no long-lived secrets):
@@ -25,38 +23,21 @@
 #        Repository name:  n8n-nodes-headless-saas-infographics
 #        Workflow name:    publish.yml
 #        Environment:      (leave blank)
-#   4. Leave the NPM_TOKEN secret unset in this repository. GitHub's OIDC
-#      token is used instead — no secret ever touches your repo settings.
+#   4. Leave the NPM_TOKEN secret unset in this repository.
 #
-# Option B — npm Automation Token (fallback, current setup):
-#   1. On npmjs.com: Access Tokens → Generate New Token → Granular Access Token.
-#      Scope it to this package with "Read and write" publish permission.
-#   2. In GitHub: Settings → Secrets and variables → Actions → New secret.
-#      Name it NPM_TOKEN and paste the token value.
-#
-# Both options work with --provenance. Provenance is signed by GitHub's OIDC
-# infrastructure regardless of how npm authentication is handled.
+# Option B — npm Automation Token (current setup):
+#   1. On npmjs.com: Access Tokens → Granular Access Token → Read and write.
+#   2. In GitHub: Settings → Secrets → Actions → NPM_TOKEN.
 #
 # ─── TAG CONVENTION ────────────────────────────────────────────────────────────
 #
-# This workflow triggers on tags matching "*.*.*" (e.g. 1.0.0).
-# To release, run locally:
-#
-#   git tag 1.0.0
-#   git push origin 1.0.0
-#
-# Or use the interactive release command:
+# Triggers on tags matching "*.*.*" (e.g. 1.0.0, 1.0.1).
+# Run locally:
 #
 #   pnpm run release
 #
-# ─── RELEASE PROCESS ───────────────────────────────────────────────────────────
-#
-# Run the following command locally to start an interactive release:
-#
-#   pnpm run release
-#
-# This will lint, build, prompt for a version bump, update the changelog,
-# commit, tag, and push — which triggers this workflow to publish to npm.
+# This will lint, build, prompt for a version bump, commit, tag, and push —
+# which triggers this workflow to publish to npm.
 
 name: Publish
 
@@ -77,15 +58,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-          cache: 'pnpm'
+
+      - name: Install pnpm
+        run: npm install -g pnpm@10
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
