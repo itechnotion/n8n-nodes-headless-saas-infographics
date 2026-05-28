@@ -7,7 +7,7 @@ import type {
 
 export class HeadlessSaasApi implements ICredentialType {
 	name = 'headlessSaasApi';
-	displayName = 'Headless SaaS API';
+	displayName = 'Infographic Image Generator API';
 	documentationUrl = 'https://headless-sass-bzzrfsh6ra-el.a.run.app/docs';
 
 	icon = {
