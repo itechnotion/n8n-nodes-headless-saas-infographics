@@ -43,6 +43,7 @@ export class HeadlessSaas implements INodeType {
 				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
+				noDataExpression: true,
 				options: [
 					{
 						name: 'Comic',
