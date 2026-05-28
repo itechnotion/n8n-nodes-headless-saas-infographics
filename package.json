@@ -1,6 +1,6 @@
 {
   "name": "@itechnotion/n8n-nodes-headless-saas-infographics",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Headless SaaS integration for n8n — generate images using your API key",
   "license": "MIT",
   "homepage": "https://github.com/itechnotion/n8n-nodes-headless-saas-infographics#readme",
